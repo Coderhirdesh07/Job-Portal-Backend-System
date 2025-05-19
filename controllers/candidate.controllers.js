@@ -21,8 +21,6 @@ async function handleCandidateRegisterRoute(request,response){
 };
 
 
-
-
 async function handleCandidateDeleteRoute(request,response){
         const {email} = request.body;
 
@@ -30,8 +28,6 @@ async function handleCandidateDeleteRoute(request,response){
 
         response.status(200).json({message:'Candidate Deleted Successfully'});
 };
-
-
 
 
 async function handleCandidateLoginRoute(request,response){
@@ -51,9 +47,6 @@ async function handleCandidateLoginRoute(request,response){
 };
 
 
-
-
-
 function handleCandidateLogoutRoute(request,response){
 
         res.clearCookie('token');
@@ -63,11 +56,23 @@ function handleCandidateLogoutRoute(request,response){
 };
 
 
+// uploading routes handler
+
+function handleCandidateCoverImage(request,response){
+
+}
+
+function handleCandidateResumeUploads(request,response){
+
+}
+
 
 
 module.exports = {
     handleCandidateRegisterRoute,
     handleCandidateDeleteRoute,
     handleCandidateLoginRoute,
-    handleCandidateLogoutRoute
+    handleCandidateLogoutRoute,
+    handleCandidateCoverImage,
+    handleCandidateResumeUploads
 };

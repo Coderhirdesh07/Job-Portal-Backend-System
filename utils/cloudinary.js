@@ -26,5 +26,27 @@ async function uploadOnCloudinary(localfilepath){
 }
 
 
+// // utils/uploadToCloudinary.js
+// const cloudinary = require('../config/cloudinary');
+
+// const uploadToCloudinary = (fileBuffer, folder, fileType) => {
+//   return new Promise((resolve, reject) => {
+//     cloudinary.uploader.upload_stream(
+//       {
+//         resource_type: fileType === 'pdf' ? 'raw' : 'image',
+//         folder,
+//       },
+//       (error, result) => {
+//         if (error) return reject(error);
+//         resolve(result.secure_url);
+//       }
+//     ).end(fileBuffer);
+//   });
+// };
+
+// module.exports = uploadToCloudinary;
+
+
+
 
 module.exports = {uploadOnCloudinary};

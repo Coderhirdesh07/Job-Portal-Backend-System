@@ -21,7 +21,7 @@ const candidateSchema = new mongoose.Schema({
     skils:{
         type:[String]
     },
-    expirence:{
+    expierence:{
         type:String,
     }
 

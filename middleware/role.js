@@ -1,6 +1,4 @@
 
-
-
 async function requiredRole(role){
     return async (request,response,next) =>{
             try{
@@ -8,10 +6,9 @@ async function requiredRole(role){
                     return response.status(401).json({ message: "Not authenticated" });
                 }
                 if(request.user.role !== role){
-                    return response.status().json({ message: `Access denied for role: ${req.user.role}` });
+                    return response.status(403).json({ message: `Access denied for role: ${req.user.role}` });
                 }
                 next();
-
             }
             catch(error){
                 console.log(error);
@@ -21,7 +18,5 @@ async function requiredRole(role){
 
 
 }
-
-
 
 module.exports = requiredRole;

@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 
-
-
 const jobListingSchema = new mongoose.Schema({
-
     title:{
         type:String,
         required:true,

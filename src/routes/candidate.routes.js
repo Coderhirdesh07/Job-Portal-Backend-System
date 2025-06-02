@@ -39,8 +39,6 @@ router.delete('/upload/delete/cover-image',verifyJwt,handleCandidateDeleteCoverI
 
 // job apply routes
 
-
-
 router.post('/job-listing/:jobId/apply',verifyJwt,upload.single('resume'),handleJobApplicationRoute);
 
 

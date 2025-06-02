@@ -2,9 +2,9 @@ const User = require('../models/user.models.js');
 const bcrypt = require('bcrypt');
 const Candidate = require('../models/candidate.models.js');
 const Recruiter = require('../models/recruiter.models.js');
-const auth = require('../middleware/auth.js');
-const role = require('../middleware/role.js');
-const multer = require('../middleware/multer.js');
+const auth = require('../../middleware/auth.js');
+const role = require('../../middleware/role.js');
+const multer = require('../../middleware/multer.js');
 const generateToken = require('../utils/jwt.js');
 const cookie = require('cookie-parser');
 

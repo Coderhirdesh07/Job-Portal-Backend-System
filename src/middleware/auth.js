@@ -1,5 +1,5 @@
 const { REPL_MODE_STRICT } = require('repl');
-const Candidate = require('../models/candidate.models.js');
+const Candidate = require('../src/models/candidate.models.js');
 const jwt = require('jsonwebtoken');
 
 

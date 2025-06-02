@@ -23,9 +23,4 @@ router.get('/profile',handleGetUserProfileRoute);
 router.delete('/delete-profile',handleUserDeleteProfileRoute);
 
 
-
-
-
-
-
 module.exports = router;

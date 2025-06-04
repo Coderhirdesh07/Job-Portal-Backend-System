@@ -3,7 +3,21 @@ const Application = require('../models/application.models');
 const { application } = require('express');
 
 
-async function handleJobApplicationRoute(request,response){
+// helps to get all applied job for candidate
+async function handleGetJobApplied(request,response){
+    const candidateId = request.user._id;
+    try{
+        const application = await Application.findOne({candidate:candidateId}).populate('Job','title company location').sort({appliedAt:-1});
+        response.status(200).json({application,message:'Application fetched Successfully'});
+    }
+    catch(error){
+        console.log(error);
+        response.status(500).json({ message: 'Error fetching your applications'});
+    }
+
+}
+// This helps to apply for job 
+async function handlePostJobApplicationRoute(request,response){
  const jobId = request.params.jobId;
  const candidateId = request.user._id;
  try{
@@ -24,10 +38,9 @@ async function handleJobApplicationRoute(request,response){
     console.log(error);
     response.status(500).json({message:'Server Error'});
  }
-
-
 }
 
+// this helps to get candidates who applied to  job-listing
 async function handleGetJobApplicationRoute(request,response){
      const {jobId} = request.params;
      const recruiterId = request.user._id;
@@ -52,19 +65,5 @@ async function handleGetJobApplicationRoute(request,response){
 
 }
 
-async function handleGetJobApplied(request,response){
-    const candidateId = request.user._id;
-    try{
-        const application = await Application.findOne({candidate:candidateId}).populate('Job','title company location').sort({appliedAt:-1});
-        response.status(200).json({application,message:'Application fetched Successfully'});
-    }
-    catch(error){
-        console.log(error);
-        response.status(500).json({ message: 'Error fetching your applications'});
-    }
 
-}
-
-module.exports = {
-        handleJobApplicationRoute
-        ,handleGetJobApplicationRoute,handleGetJobApplied};
+module.exports = {handleGetJobApplied,handleGetJobApplicationRoute,handlePostJobApplicationRoute};

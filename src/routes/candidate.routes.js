@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {verifyJwt} = require('../middleware/auth.js');
-const {handleJobApplicationRoute,} = require('../controllers/candidate.controllers.js');
+const {requiredRole} = require('../middleware/role.js');
+const {handlePostJobApplicationRoute,handleGetJobApplied} = require('../controllers/application.controllers.js');
 
 // uploads routes
 router.post('/upload/cover-image',verifyJwt,handleCandidateCoverImageRoute);
@@ -34,13 +35,15 @@ router.delete('/upload/delete/cover-image',verifyJwt,handleCandidateDeleteCoverI
 
 
 
-// job applying routes 
 
 
-// job apply routes
 
-router.post('/job-listing/:jobId/apply',verifyJwt,upload.single('resume'),handleJobApplicationRoute);
 
+
+// job related routes
+router.post('/job-listing/:jobId/apply',verifyJwt,upload.single('resume'),handlePostJobApplicationRoute);
+// route to view all applied jobs
+router.get('/job-listing/apply',verifyJwt,recruiterRole('candidate'),handleGetJobApplied)
 
 
 module.exports = router;

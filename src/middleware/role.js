@@ -15,8 +15,6 @@ async function requiredRole(role){
                 return response.status(500).json({ message: "Internal server error" });
             }
     }
-
-
 }
 
 module.exports = requiredRole;

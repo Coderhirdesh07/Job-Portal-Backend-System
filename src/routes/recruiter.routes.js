@@ -12,6 +12,4 @@ router.get('/job-listing/:jobId/applicants',verifyJwt,requiredRole('recruiter'),
 // view Candidate for job
 router.get('/job-listing/candidates',verifyJwt,requiredRole('recruiter'),);
 
-
-
 module.exports = router;

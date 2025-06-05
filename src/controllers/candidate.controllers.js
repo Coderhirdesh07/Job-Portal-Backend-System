@@ -1,5 +1,7 @@
 const Candidate = require('../models/candidate.models.js');
+const User = require('../models/user.models.js');
 const cookie = require('cookie-parser');
+const { uploadOnCloudinary } = require('../utils/cloudinary.js');
 
 
 
@@ -12,13 +14,52 @@ async function handleCandidateDeleteRoute(request,response){
 
 // uploading routes handler
 
-function handleCandidateCoverImage(request,response){
-    
+async function handleCandidateCoverImageRoute(request,response){
+    try{
+      const userId = request.user._id;
+     const files = request.files;
+     let updates = {};
+     if(!files.CoverImage) response.status(400).json({message:'No File To Upload'});
+     const coverImageUrl = await uploadOnCloudinary(files.CoverImage[0].buffer,'CoverImage','image');
+     updates.coverImageUrl = coverImageUrl;
+
+    const profile = await User.findOneAndUpdate({
+        userId:userId,
+        $set:updates,
+        new:true
+     });
+
+    response.status(200).json({message:'CoverImage Uploaded Sucessfully'});
+   }
+   catch(error){
+    console.log(error);
+    response.status(500).json({message:'Internal Server Error &  CoverImage upload Failed'});
+   }
 
 }
 
-function handleCandidateResumeUploads(request,response){
+async function handleCandidateResumeUploadRoute(request,response){
+   try{
+    const userId = request.user._id;
+    const files = request.files;
+    let updates = {};
+    if(!files.resume) response.status(400).json({message:'No File To Upload'});
+    const resumeUrl = await uploadOnCloudinary(files.resume[0].buffer,'resume','pdf');
+    updates.resumeUrl = resumeUrl;
 
+    const profile = await User.findOneAndUpdate({
+        userId:userId,
+        $set:updates,
+        new:true
+     });
+
+    response.status(200).json({message:'Resume Uploaded Sucessfully'});
+
+   }
+   catch(error){
+    console.log(error);
+    response.status(500).json({message:'Internal Server Error & Resume Upload Failed'});
+   }
 }
 
 
@@ -59,13 +100,8 @@ function handleCandidateResumeUploads(request,response){
 
 
 
-
-
-
-
-
 module.exports = {
     handleCandidateDeleteRoute,
-    handleCandidateCoverImage,
-    handleCandidateResumeUploads
+    handleCandidateCoverImageRoute,
+    handleCandidateResumeUploadRoute
 };

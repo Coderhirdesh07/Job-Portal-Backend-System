@@ -9,7 +9,6 @@ const generateToken = require('../utils/jwt.js');
 const cookie = require('cookie-parser');
 
 
-
 async function handleUserRegisterRoute(request,response){
     try{
      const {email,password,fullName,role} = request.body;
@@ -97,11 +96,28 @@ async function handelUserLogoutRoute(request,response){
 }
 
 async function handleGetUserProfileRoute(request,response){
+    const {email} = request.body;
 
+    if(!email) response.status(400).json({message:"Invalid"});
+
+    const user = await User.findOne({email:email});
+    if(!user) response.status(400).json({message:"User is not found"});
+
+    return response.status(200).json({message:"User Found ",info:user});
 }
 
 async function handleUserDeleteProfileRoute(request,response){
+    const {email} = request.body;
 
+    if(!email) response.status(400).json({message:"Invalid"});
+
+    const user = await User.findOneAndDelete({email:email});
+
+    response.clearCookie('token',{
+        httpOnly:true,
+        sameSite:'strict'
+    });
+    return response.status(200).json({message:"User Delete Successfully "});
 }
 
 
